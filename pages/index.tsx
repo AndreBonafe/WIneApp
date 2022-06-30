@@ -1,9 +1,25 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import styles from '../styles/Home.module.css';
+import useSWR from 'swr';
+
+const fetcher = async (url: string) => {
+  const res = await fetch(url);
+  const data = await res.json();
+
+  if (res.status !== 200) {
+    throw new Error(data.message);
+  }
+  return data;
+};
 
 const Home: NextPage = () => {
+  const url = 'https://wine-back-test.herokuapp.com/products?page=1&limit=10';
+  const { data, error } = useSWR(url, fetcher);
+  console.log(data.items);
+
   return (
     <div className={styles.container}>
       <Head>
