@@ -1,0 +1,17 @@
+{
+  "extends": "next/core-web-vitals",
+  "rules": {
+    "semi": ["error", "always"],
+    "quotes": ["error", "single"],
+    "linebreak-style": 0,
+    "indent": ["error", 2],
+    "max-len": [
+      "error",
+      {
+        "code": 90,
+        "ignoreComments": true,
+        "ignoreUrls": true
+      }
+    ]
+}
+}
