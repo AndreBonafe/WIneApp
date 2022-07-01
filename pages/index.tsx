@@ -6,6 +6,7 @@ import WineCard from '../components/WIneCard';
 import { WineObj } from '../Interfaces/WineInterface';
 import { Pagination } from '@mui/material';
 import FilterSideBar from '../components/FIlterSidebar';
+import Header from '../components/Header';
 
 const fetcher = async (url: string) => {
   const res = await fetch(url);
@@ -38,6 +39,8 @@ const Home: NextPage = () => {
         <meta name="description" content="WineApp" />
         <link rel="icon" href="/WineApp.ico" />
       </Head>
+
+      <Header />
 
       <aside id="sidebar">
         <FilterSideBar setter={setFilter} />
