@@ -1,8 +1,10 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import { useState } from 'react';
 import useSWR from 'swr';
 import WineCard from '../components/WIneCard';
 import { WineObj } from '../Interfaces/WineInterface';
+import { Pagination } from '@mui/material';
 
 const fetcher = async (url: string) => {
   const res = await fetch(url);
@@ -15,12 +17,14 @@ const fetcher = async (url: string) => {
 };
 
 const Home: NextPage = () => {
-  const url = 'https://wine-back-test.herokuapp.com/products?page=1&limit=10';
+  const [page, setPage] = useState(1);
+  const url = `https://wine-back-test.herokuapp.com/products?page=${page}&limit=10`;
   const { data, error } = useSWR(url, fetcher);
   
   if (error) return <div>falhou ao carregar</div>;
   if (!data) return <div>carregando...</div>;
 
+  console.log(data);
   return (
     <div>
       <Head>
@@ -35,6 +39,15 @@ const Home: NextPage = () => {
         {data.items.map((e: WineObj) => (
           <WineCard wine={e} key={e.id}/>
         ))}
+
+        <Pagination
+          count={data.totalPages}
+          color='primary'
+          page={page}
+          onChange={(_e, p) => setPage(p)}
+          showFirstButton={true}
+          showLastButton={true}
+        />
       </main>
     </div>
   );
