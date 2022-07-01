@@ -5,6 +5,7 @@ import useSWR from 'swr';
 import WineCard from '../components/WIneCard';
 import { WineObj } from '../Interfaces/WineInterface';
 import { Pagination } from '@mui/material';
+import FilterSideBar from '../components/FIlterSidebar';
 
 const fetcher = async (url: string) => {
   const res = await fetch(url);
@@ -33,6 +34,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/WineApp.ico" />
       </Head>
 
+      <aside id="sidebar">
+        <FilterSideBar />
+      </aside>
       <main>
         <p>{data.items.length} produtos encontrados</p>
 
