@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import WineCard from '../components/WIneCard';
 import { WineObj } from '../Interfaces/WineInterface';
@@ -19,13 +19,18 @@ const fetcher = async (url: string) => {
 
 const Home: NextPage = () => {
   const [page, setPage] = useState(1);
-  const url = `https://wine-back-test.herokuapp.com/products?page=${page}&limit=10`;
+  const [filter, setFilter] = useState('0');
+
+  const url = `https://wine-back-test.herokuapp.com/products?page=${page}&limit=10&filter=${filter}`;
   const { data, error } = useSWR(url, fetcher);
+
+  useEffect(() => {
+    const selectedFilter = localStorage.getItem('selectedFilter');
+    if(selectedFilter) setFilter(selectedFilter);
+  }, []);
   
   if (error) return <div>falhou ao carregar</div>;
   if (!data) return <div>carregando...</div>;
-
-  console.log(data);
   return (
     <div>
       <Head>
@@ -35,13 +40,14 @@ const Home: NextPage = () => {
       </Head>
 
       <aside id="sidebar">
-        <FilterSideBar />
+        <FilterSideBar setter={setFilter} />
       </aside>
       <main>
-        <p>{data.items.length} produtos encontrados</p>
+        <p>{data.totalItems === 0 ? 'Nenhum produto encontrado' 
+          : `${data.totalItems} produtos encontrados`}</p>
 
         {data.items.map((e: WineObj) => (
-          <WineCard wine={e} key={e.id}/>
+          <WineCard wine={e} key={e.id} />
         ))}
 
         <Pagination
