@@ -23,7 +23,7 @@ const HomeStore: NextPage = () => {
   const [page, setPage] = useState(1);
   const [filter, setFilter] = useState('0');
 
-  const { setCart } = useContext(Context);
+  const { setCart, nameFilter } = useContext(Context);
 
   const url = `https://wine-back-test.herokuapp.com/products?page=${page}&limit=10&filter=${filter}`;
   const { data, error } = useSWR(url, fetcher);
@@ -53,9 +53,11 @@ const HomeStore: NextPage = () => {
         <p>{data.totalItems === 0 ? 'Nenhum produto encontrado' 
           : `${data.totalItems} produtos encontrados`}</p>
 
-        {data.items.map((e: WineObj) => (
-          <WineCard wine={e} key={e.id} />
-        ))}
+        {data.items.filter((e: WineObj) => 
+          e.name.toLocaleLowerCase().includes(nameFilter))
+          .map((e: WineObj) => (
+            <WineCard wine={e} key={e.id} />
+          ))}
 
         <Pagination
           count={data.totalPages}

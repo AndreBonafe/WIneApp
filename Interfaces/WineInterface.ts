@@ -22,6 +22,8 @@ export interface WineCart extends WineObj {
 }
 
 export interface CartContextType {
+  nameFilter: string, 
+  setNameFilter: React.Dispatch<React.SetStateAction<string>>,
   cart: WineCart[];
   setCart: React.Dispatch<React.SetStateAction<WineCart[]>>
 };

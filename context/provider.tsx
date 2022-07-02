@@ -5,8 +5,11 @@ import { WineCart } from '../Interfaces/WineInterface';
 
 const Provider = ({ children } : ScriptProps ) => {
   const [cart, setCart] = useState<WineCart[]>([]);
+  const [nameFilter, setNameFilter] = useState('');
 
   const store = {
+    nameFilter,
+    setNameFilter,
     cart,
     setCart
   };
