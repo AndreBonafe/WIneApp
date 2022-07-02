@@ -39,8 +39,8 @@ const Header = () => {
       </Link>
       <Link href='/carrinho'>
         <AiOutlineShoppingCart />
+        <span>{cart.reduce((acc, curr) => acc + curr.quantity, 0)}</span>
       </Link>
-      <span>{cart.reduce((acc, curr) => acc + curr.quantity, 0)}</span>
     </div>
   );
 };
