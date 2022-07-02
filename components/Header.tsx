@@ -80,12 +80,23 @@ const HeaderImages = styled.div`
   align-self: center;
   width: 150px;
   justify-content: space-evenly;
+
+  @media (min-width: 415px) {
+    width: 300px;
+  }
 `;
 
 const StyledInput = styled.input`
   width: 100%;
   margin-right: 5px;
   align-self: center;
+  @media (min-width: 415px) {
+    height: 35px;
+    margin-left: 15px;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 1px 0px 5px 1px #C3C3C3;
+  }
 `;
 
 const Header = () => {
