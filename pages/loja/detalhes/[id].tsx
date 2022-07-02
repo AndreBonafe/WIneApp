@@ -9,6 +9,7 @@ import Image from 'next/image';
 import ReactStars from 'react-stars';
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai';
 import Link from 'next/link';
+import { NextPage } from 'next';
 
 const fetcher = async (url: string) => {
   const res = await fetch(url);
@@ -20,7 +21,7 @@ const fetcher = async (url: string) => {
   return data;
 };
 
-const Detail = () => {
+const Detail: NextPage = () => {
   const router = useRouter();
   const { id } = router.query;
 
@@ -81,7 +82,7 @@ const Detail = () => {
         <link rel="icon" href="/WineApp.ico" />
       </Head>
 
-      <Header cart={cart}/>
+      <Header />
 
       <Link href='/loja'>
         <p>{'< VOLTAR'}</p>

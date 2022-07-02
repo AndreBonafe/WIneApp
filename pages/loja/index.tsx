@@ -19,11 +19,11 @@ const fetcher = async (url: string) => {
   return data;
 };
 
-const Home: NextPage = () => {
+const HomeStore: NextPage = () => {
   const [page, setPage] = useState(1);
   const [filter, setFilter] = useState('0');
 
-  const { cart, setCart } = useContext(Context);
+  const { setCart } = useContext(Context);
 
   const url = `https://wine-back-test.herokuapp.com/products?page=${page}&limit=10&filter=${filter}`;
   const { data, error } = useSWR(url, fetcher);
@@ -44,7 +44,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/WineApp.ico" />
       </Head>
 
-      <Header cart={cart}/>
+      <Header />
 
       <aside id="sidebar">
         <FilterSideBar setter={setFilter} />
@@ -54,7 +54,7 @@ const Home: NextPage = () => {
           : `${data.totalItems} produtos encontrados`}</p>
 
         {data.items.map((e: WineObj) => (
-          <WineCard wine={e} key={e.id} cartSetter={setCart} cart={cart} />
+          <WineCard wine={e} key={e.id} />
         ))}
 
         <Pagination
@@ -70,4 +70,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default HomeStore;

@@ -1,8 +1,12 @@
 import Image from 'next/image';
+import Link from 'next/link';
+import { useContext } from 'react';
 import { AiOutlineSearch, AiOutlineUser, AiOutlineShoppingCart } from 'react-icons/ai';
-import { WineCart } from '../Interfaces/WineInterface';
+import Context from '../context/context';
 
-const Header = ({ cart } : { cart: WineCart[] }) => {
+const Header = () => {
+  const { cart } = useContext(Context);
+
   return (
     <div>
       <Image 
@@ -11,11 +15,11 @@ const Header = ({ cart } : { cart: WineCart[] }) => {
         height={50}
         width={50}
       />
-      <p>Clube</p>
-      <p>Loja</p>
-      <p>Produtores</p>
-      <p>Ofertas</p>
-      <p>Eventos</p>
+      <Link href='/clube'>Clube</Link>
+      <Link href='/loja'>Loja</Link>
+      <Link href='/produtores'>Produtores</Link>
+      <Link href='/ofertas'>Ofertas</Link>
+      <Link href='/eventos'>Eventos</Link>
       <AiOutlineSearch />
       <AiOutlineUser />
       <AiOutlineShoppingCart />

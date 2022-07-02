@@ -1,15 +1,12 @@
 import Image from 'next/image';
 import { WineCart, WineObj } from '../Interfaces/WineInterface'; 
-import React, { Dispatch } from 'react';
+import React, { Dispatch, useContext } from 'react';
 import Link from 'next/link';
+import Context from '../context/context';
 
-const WineCard = (
-  { wine, cartSetter, cart }: {
-    wine: WineObj, 
-    cartSetter: Dispatch<React.SetStateAction<WineCart[]>>,
-    cart: WineCart[]
-  },
-) => {
+const WineCard = ({ wine }: { wine: WineObj }) => {
+
+  const { cart, setCart } = useContext(Context);
 
   const localCart: WineCart[] | [] = JSON.parse(localStorage.getItem('cart') || '[]');
 
@@ -44,12 +41,12 @@ const WineCard = (
           if (!cart.some((e) => e.id === wine.id)) {
             const objCart: WineCart = { ...wine, quantity: 1 };
             localStorage.setItem('cart', JSON.stringify([...cart, objCart]));
-            cartSetter([...cart, objCart ]);
+            setCart([...cart, objCart ]);
           } else {
             const wineIndex = localCart.findIndex((e) => e.id === wine.id);
             localCart[wineIndex].quantity += 1;
             localStorage.setItem('cart', JSON.stringify(localCart));
-            cartSetter(localCart);
+            setCart(localCart);
           }
         }}
       >
