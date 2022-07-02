@@ -20,3 +20,8 @@ export interface WineObj {
 export interface WineCart extends WineObj {
   quantity: number
 }
+
+export interface CartContextType {
+  cart: WineCart[];
+  setCart: React.Dispatch<React.SetStateAction<WineCart[]>>
+};

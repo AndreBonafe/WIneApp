@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { AiOutlineSearch, AiOutlineUser, AiOutlineShoppingCart } from 'react-icons/ai';
-import { WineCart, WineObj } from '../Interfaces/WineInterface';
+import { WineCart } from '../Interfaces/WineInterface';
 
 const Header = ({ cart } : { cart: WineCart[] }) => {
   return (
