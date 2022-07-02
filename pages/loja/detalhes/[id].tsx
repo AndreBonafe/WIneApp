@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import Header from '../../../components/Header';
-import { WineObj } from '../../../Interfaces/WineInterface';
+import { WineCart, WineObj } from '../../../Interfaces/WineInterface';
 import Context from '../../../context/context';
 import { useContext, useEffect } from 'react';
 import Head from 'next/head';
@@ -42,6 +42,36 @@ const Detail = () => {
   console.log(wine);
 
   const cartItem = cart.find((e) => e.id === Number(id));
+
+  const localCart: WineCart[] | [] = JSON.parse(localStorage.getItem('cart') || '[]');
+
+  const onClickPlus = () => {
+    if (!cartItem) {
+      const objCart: WineCart = { ...wine, quantity: 1 };
+      localStorage.setItem('cart', JSON.stringify([...cart, objCart]));
+      setCart([...cart, objCart ]);
+    } else {
+      const wineIndex = localCart.findIndex((e) => e.id === wine.id);
+      localCart[wineIndex].quantity += 1;
+      localStorage.setItem('cart', JSON.stringify(localCart));
+      setCart(localCart);
+    }
+  };
+
+  const onClickMinus = () => {
+    if (cartItem) {
+      if (cartItem.quantity === 1) {
+        const cartWithoutThis = localCart.filter((e) => e.id !== wine.id);
+        localStorage.setItem('cart', JSON.stringify(cartWithoutThis));
+        setCart(cartWithoutThis);
+        return;
+      }
+      const wineIndex = localCart.findIndex((e) => e.id === wine.id);
+      localCart[wineIndex].quantity -= 1;
+      localStorage.setItem('cart', JSON.stringify(localCart));
+      setCart(localCart);
+    }
+  };
 
   return (
     <div>
@@ -96,10 +126,12 @@ const Detail = () => {
         <p>{wine.sommelierComment}</p>
       </section>
       <div>
-        <AiOutlineMinusCircle />
+        <AiOutlineMinusCircle onClick={ () => onClickMinus() } />
         <p>{cartItem ? cartItem.quantity : 0}</p>
-        <AiOutlinePlusCircle />
-        <p>ADICIONAR</p>
+        <AiOutlinePlusCircle onClick={ () => onClickPlus() } />
+        <Link href='/loja'>
+          <p>ADICIONAR</p>
+        </Link>
       </div>
     </div>
   );
