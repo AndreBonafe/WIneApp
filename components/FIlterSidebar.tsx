@@ -21,15 +21,15 @@ const StyledSection = styled.section`
     display: flex;
     flex-direction: column;
     background-color: #f6f6f6;
-    padding: 0 0 0 45px;
+    padding: 0 0 0 10%;
 
     label {
       display: flex;
       font-size: 16px;
-      padding: 0 25% 15px 25%;
+      padding: 0 10% 15px 10%;
     }
     h3 {
-      padding: 0 25% 0 25%;
+      padding: 0 10% 0 10%;
     }
   }
 
