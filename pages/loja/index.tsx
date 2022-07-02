@@ -33,7 +33,15 @@ const theme = createTheme({
 });
 
 const StyledHomeStore = styled.div`
+  padding-top: 15px;
   background-color: #f6f6f6;
+  @media (min-width: 415px) {
+    display: flex;
+
+    .sidebar {
+      width: 80%;
+    }
+  }
 `;
 
 const StyledMain = styled.main`
@@ -67,6 +75,12 @@ const StyledCards = styled.div`
   .winecard {
     width: 40%;
   }
+  @media(min-width: 415px) {
+    .winecard {
+      width: 20%;
+      margin: 5px;
+    }
+  }
 `;
 
 const HomeStore: NextPage = () => {
@@ -88,16 +102,15 @@ const HomeStore: NextPage = () => {
   if (!data) return <div>carregando...</div>;
   return (
     <ThemeProvider theme={theme}>
+      <Head>
+        <title>WineApp</title>
+        <meta name="description" content="WineApp" />
+        <link rel="icon" href="/WineApp.ico" />
+      </Head>
+
+      <Header />
       <StyledHomeStore>
-        <Head>
-          <title>WineApp</title>
-          <meta name="description" content="WineApp" />
-          <link rel="icon" href="/WineApp.ico" />
-        </Head>
-
-        <Header />
-
-        <aside id="sidebar">
+        <aside className="sidebar">
           <FilterSideBar setter={setFilter} />
         </aside>
         <StyledMain>
@@ -117,15 +130,16 @@ const HomeStore: NextPage = () => {
               ))}
           </StyledCards>
 
-          <Pagination
-            count={data.totalPages}
-            color='secondary'
-            page={page}
-            onChange={(_e, p) => setPage(p)}
-            shape='rounded'
-            className='pagination'
-            variant='outlined'
-          />
+          {data.totalItems !== 0 && (
+            <Pagination
+              count={data.totalPages}
+              color='secondary'
+              page={page}
+              onChange={(_e, p) => setPage(p)}
+              shape='rounded'
+              className='pagination'
+              variant='outlined'
+            />)}
         </StyledMain>
       </StyledHomeStore>
     </ThemeProvider>

@@ -12,14 +12,13 @@ import Link from 'next/link';
 import { NextPage } from 'next';
 import styled from 'styled-components';
 import { 
-  DiscountSpan, MiniPrice, PartnerSpan, PriceSpan, StyledButton 
+  DiscountSpan, PartnerSpan, PriceSpan, StyledButton 
 } from '../../../components/WIneCard';
 
 const StyledDetail = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #f6f6f6;
-  padding: 0 15px 100px 15px;
   align-items: center;
   justify-content: space-between;
 
@@ -29,6 +28,54 @@ const StyledDetail = styled.div`
 
   h4 {
     text-align: center;
+  }
+
+  @media (max-width: 414px) {
+    padding: 0 15px 100px 15px;
+  }
+
+  @media (min-width: 415px) {
+    padding: 0 15px 0 15px;
+    display: flex;
+    flex-direction: row;
+
+    .wine-img {
+      width: 500px;
+    }
+
+    .wine-description {
+      width: 35%;
+      margin-right: 60px;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+
+      .wine-name {
+        text-align: left;
+        font-size: 20px;
+      }
+
+      .from {
+        align-self: flex-start;
+      }
+    }
+
+    .voltar {
+      align-self: flex-start;
+    }
+
+    .price {
+      font-size: 25px;
+    }
+
+    .some-comment {
+      color: gray;
+    }
+
+    .flag {
+      align-self: flex-start;
+      margin-bottom: 50px;
+    }
   }
 `;
 
@@ -85,6 +132,31 @@ const StyledWineDetsSection = styled.section`
   .flag {
     display: flex;
     align-items: center;
+  }
+`;
+
+const AddAndRemove = styled.div`
+  display: flex;
+  align-items: center;
+  background-color: #7ebc43;
+  padding: 15px 35px 15px 15px;
+  border-radius: 18px;
+  margin-bottom: 15px;
+  height: 60px;
+  color: white;
+  .btn {
+    margin: 0 5px 0 5px;
+    width: 50px;
+  }
+  width: 55%;
+`;
+
+const MiniPrice = styled.span`
+  color: gray;
+  padding: 2px;
+  border-radius: 2px;
+  font-size: 11px;
+  margin-left: 10px;
   }
 `;
 
@@ -163,81 +235,105 @@ const Detail: NextPage = () => {
 
       <StyledDetail>
         {window.innerWidth >= 414 
-        && (
-          <Link href='/loja'>
-            <p>{'< VOLTAR'}</p>
-          </Link>
-        )}
-
-        <SpanFrom>{`Vinhos > ${wine.country} > ${wine.region}`}</SpanFrom>
-        <h2>{wine.name}</h2>
-        <StyledWineDetsSection>
-          <div className='flag'>
-            <Image 
-              unoptimized
-              loader={() => wine.flag}
-              src={wine.flag}
-              alt={`${wine.country} flag`}
-              height={30}
-              width={30}
-            />
-            <p>{wine.country}</p>
-            <p>{wine.type}</p>
-            <p>{wine.classification}</p>
-            <p>{wine.size}</p>
-          </div>
-          <ReactStars 
-            count={5}
-            size={25}
-            value={wine.rating}
-            edit={false}
-          />
-          <span>{`(${wine.avaliations})`}</span>
+            && (
+              <Link href='/loja'>
+                <p className='voltar'>{'< VOLTAR'}</p>
+              </Link>
+            )}
+        {window.innerWidth >= 414 && (
           <Image
             src={wine.image}
             alt={`${wine.name}-image`}
-            width={232.5}
-            height={350.5}
+            width={382}
+            height={500}
+            className="wine-img"
           />
-        </StyledWineDetsSection>
-        {window.innerWidth >= 414 ? (
-          <section>
-            <h4>R$</h4>
-            <h2>{wine.priceMember.toFixed(2).replace('.', ',')}</h2>
-            <h4>NÃO SÓCIO R${wine.priceMember.toFixed(2).replace('.', ',')}/UN.</h4>
-          </section>) : (
-          <PriceSection>
-            <div className='prices'>
-              <DiscountSpan className='disc'>{`  ${wine.discount}%OFF!`}</DiscountSpan>
-              <MiniPrice>{`R$${wine.price.toFixed(2).replace('.', ',')} `}</MiniPrice>
-              <PriceSpan className="big-price">
+        )}
+        <div className="wine-description">
+          <SpanFrom className='from'>
+            {`Vinhos > ${wine.country} > ${wine.region}`}
+          </SpanFrom>
+          <h2 className="wine-name">{wine.name}</h2>
+          <StyledWineDetsSection>
+            <div className='flag'>
+              <Image 
+                unoptimized
+                loader={() => wine.flag}
+                src={wine.flag}
+                alt={`${wine.country} flag`}
+                height={30}
+                width={30}
+              />
+              <p>{wine.country}</p>
+              <p>{wine.type}</p>
+              <p>{wine.classification}</p>
+              <p>{wine.size}</p>
+              <ReactStars 
+                count={5}
+                size={15}
+                value={wine.rating}
+                edit={false}
+                className="stars"
+              />
+              <p>{`(${wine.avaliations})`}</p>
+            </div>
+            {window.innerWidth <= 414 && (
+              <Image
+                src={wine.image}
+                alt={`${wine.name}-image`}
+                width={232.5}
+                height={350.5}
+              />
+            )}
+          </StyledWineDetsSection>
+          {window.innerWidth >= 414 ? (
+            <section>
+              <PriceSpan>
                 <span className="cifrão">R$</span>
                 <span className="price">
                   {wine.priceMember.toFixed(2).replace('.', ',')}
                 </span>
               </PriceSpan>
-              <PartnerSpan>{`PREÇO PARA NÃO SÓCIO R$${wine.priceNonMember}`}</PartnerSpan>
-            </div>
-            <StyledButton onClick={() => onClickPlus()} className="addbtn">
-              ADICIONAR
-            </StyledButton>
-          </PriceSection>
-        )}
-        <section>
-          <h4>Comentário do Sommelier</h4>
-          <p>{wine.sommelierComment}</p>
-        </section>
-        {window.innerWidth >= 414
-        && (
-          <div>
-            <AiOutlineMinusCircle onClick={ () => onClickMinus() } />
-            <p>{cartItem ? cartItem.quantity : 0}</p>
-            <AiOutlinePlusCircle onClick={ () => onClickPlus() } />
-            <Link href='/loja'>
-              <p>ADICIONAR</p>
-            </Link>
-          </div>
-        )}
+              <br />
+              <MiniPrice className='detailnon'>
+                NÃO SÓCIO R${wine.priceMember.toFixed(2).replace('.', ',')}/UN.
+              </MiniPrice>
+            </section>) : (
+            <PriceSection>
+              <div className='prices'>
+                <DiscountSpan className='disc'>{`  ${wine.discount}%OFF!`}</DiscountSpan>
+                <MiniPrice>{`R$${wine.price.toFixed(2).replace('.', ',')} `}</MiniPrice>
+                <PriceSpan className="big-price">
+                  <span className="cifrão">R$</span>
+                  <span className="price">
+                    {wine.priceMember.toFixed(2).replace('.', ',')}
+                  </span>
+                </PriceSpan>
+                <PartnerSpan>
+                  {`PREÇO PARA NÃO SÓCIO R$${wine.priceNonMember}`}
+                </PartnerSpan>
+              </div>
+              <StyledButton onClick={() => onClickPlus()} className="addbtn">
+                ADICIONAR
+              </StyledButton>
+            </PriceSection>
+          )}
+          <section>
+            <h4>Comentário do Sommelier</h4>
+            <p className="some-comment">{wine.sommelierComment}</p>
+          </section>
+          {window.innerWidth >= 414
+          && (
+            <AddAndRemove>
+              <AiOutlineMinusCircle onClick={ () => onClickMinus() } className='btn'/>
+              <p>{cartItem ? cartItem.quantity : 0}</p>
+              <AiOutlinePlusCircle onClick={ () => onClickPlus() } className='btn'/>
+              <Link href='/loja'>
+                <p>ADICIONAR</p>
+              </Link>
+            </AddAndRemove>
+          )}
+        </div>
       </StyledDetail>
     </>
   );

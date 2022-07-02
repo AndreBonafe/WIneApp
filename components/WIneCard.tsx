@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { WineCart, WineObj } from '../Interfaces/WineInterface'; 
-import React, { Dispatch, useContext } from 'react';
+import React, { useContext } from 'react';
 import Link from 'next/link';
 import Context from '../context/context';
 import styled from 'styled-components';
@@ -11,6 +11,11 @@ const StyledCard = styled.div`
   background-color: white;
   border-radius: 10px;
   justify-content: center;
+
+  @media(min-width: 415px) {
+    height: 510px;
+    padding: 20px;
+  }
 `;
 
 export const StyledButton = styled.button`
@@ -21,6 +26,10 @@ export const StyledButton = styled.button`
   margin: 0px 5px 15px 0px;
   background-color: #7ebc43;
   border-radius: 2px;
+
+  @media(min-width: 415px) {
+    margin-top: 15px;
+  }
 `;
 
 export const DiscountSpan = styled.span`
@@ -30,12 +39,15 @@ export const DiscountSpan = styled.span`
   border-radius: 2px;
 `;
 
-export const MiniPrice = styled.span`
+const MiniPrice = styled.span`
   color: gray;
   padding: 2px;
   border-radius: 2px;
   font-size: 11px;
   text-decoration: line-through;
+  .detailnon {
+    text-decoration: none;
+  }
 `;
 
 export const PartnerSpan = styled.span`
