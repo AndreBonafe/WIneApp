@@ -3,11 +3,12 @@ import Head from 'next/head';
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
 import useSWR from 'swr';
 import WineCard from '../../components/WIneCard';
-import { WineCart, WineObj } from '../../Interfaces/WineInterface';
+import { WineObj } from '../../Interfaces/WineInterface';
 import { Pagination } from '@mui/material';
 import FilterSideBar from '../../components/FIlterSidebar';
 import Header from '../../components/Header';
 import Context from '../../context/context';
+import styled from 'styled-components';
 
 const fetcher = async (url: string) => {
   const res = await fetch(url);
@@ -18,6 +19,10 @@ const fetcher = async (url: string) => {
   }
   return data;
 };
+
+const StyledHomeStore = styled.div`
+  background-color: #f6f6f6;
+`;
 
 const HomeStore: NextPage = () => {
   const [page, setPage] = useState(1);
@@ -37,7 +42,7 @@ const HomeStore: NextPage = () => {
   if (error) return <div>falhou ao carregar</div>;
   if (!data) return <div>carregando...</div>;
   return (
-    <div>
+    <StyledHomeStore>
       <Head>
         <title>WineApp</title>
         <meta name="description" content="WineApp" />
@@ -68,7 +73,7 @@ const HomeStore: NextPage = () => {
           showLastButton={true}
         />
       </main>
-    </div>
+    </StyledHomeStore>
   );
 };
 
