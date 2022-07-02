@@ -24,6 +24,29 @@ const StyledHomeStore = styled.div`
   background-color: #f6f6f6;
 `;
 
+const ProdutosEncontrados = styled.div`
+  display: flex;
+  color: gray;
+  .number {
+    margin-right: 5px;
+    font-weight: bold;
+    color: black;
+  }
+  justify-content: center;
+  padding: 3px;
+`;
+
+const StyledCards = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 10px;
+
+  .winecard {
+    width: 40%;
+  }
+`;
+
 const HomeStore: NextPage = () => {
   const [page, setPage] = useState(1);
   const [filter, setFilter] = useState('0');
@@ -55,14 +78,21 @@ const HomeStore: NextPage = () => {
         <FilterSideBar setter={setFilter} />
       </aside>
       <main>
-        <p>{data.totalItems === 0 ? 'Nenhum produto encontrado' 
-          : `${data.totalItems} produtos encontrados`}</p>
-
-        {data.items.filter((e: WineObj) => 
-          e.name.toLocaleLowerCase().includes(nameFilter))
-          .map((e: WineObj) => (
-            <WineCard wine={e} key={e.id} />
-          ))}
+        {data.totalItems === 0
+          ? (<p>Nenhum produto encontrado</p>)
+          : (
+            <ProdutosEncontrados>
+              <p className="number">{data.totalItems}</p>
+              <p>produtos encontrados</p>
+            </ProdutosEncontrados>
+          )}
+        <StyledCards>
+          {data.items.filter((e: WineObj) => 
+            e.name.toLocaleLowerCase().includes(nameFilter))
+            .map((e: WineObj) => (
+              <WineCard wine={e} key={e.id} />
+            ))}
+        </StyledCards>
 
         <Pagination
           count={data.totalPages}

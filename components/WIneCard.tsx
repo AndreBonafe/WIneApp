@@ -3,6 +3,59 @@ import { WineCart, WineObj } from '../Interfaces/WineInterface';
 import React, { Dispatch, useContext } from 'react';
 import Link from 'next/link';
 import Context from '../context/context';
+import styled from 'styled-components';
+
+const StyledCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 10px;
+  justify-content: center;
+`;
+
+const StyledButton = styled.button`
+  width: 100%;
+  color: white;
+  height: 30px;
+  border: none;
+  margin: 0px 5px 15px 0px;
+  background-color: #7ebc43;
+  border-radius: 2px;
+`;
+
+const DiscountSpan = styled.span`
+  color: white;
+  background-color: #f79552;
+  padding: 2px;
+  border-radius: 2px;
+`;
+
+const MiniPrice = styled.span`
+  color: gray;
+  padding: 2px;
+  border-radius: 2px;
+  font-size: 11px;
+  text-decoration: line-through;
+`;
+
+const PartnerSpan = styled.span`
+  color: gray;
+  padding: 2px;
+  border-radius: 2px;
+  font-size: 11px;
+`;
+
+const PriceSpan = styled.span`
+  color: #c81a78;
+
+  .cifrão {
+    font-size: 12px;
+  }
+
+  .price {
+    font-weight: bold;
+  }
+`;
 
 const WineCard = ({ wine }: { wine: WineObj }) => {
 
@@ -11,31 +64,40 @@ const WineCard = ({ wine }: { wine: WineObj }) => {
   const localCart: WineCart[] | [] = JSON.parse(localStorage.getItem('cart') || '[]');
 
   return (
-    <div>
-      <Link href={`/loja/detalhes/${wine.id}`}>
-        <div>
-          <Image
-            src={wine.image}
-            alt={`${wine.name}-image`}
-            width={232.5}
-            height={350.5}
-          />
-          <p>{wine.name}</p>
-          <p>
-            <span>{`R$${wine.price.toFixed(2).replace('.', ',')} `}</span>
-            <span>{`  ${wine.discount}%OFF!`}</span>
-          </p>
-          <p>
-            <span>SÓCIO WINE</span>
-            <span>{`  R$${wine.priceMember.toFixed(2).replace('.', ',')}`}</span>
-          </p>
-          <p>
-            <span>NÃO SÓCIO</span>
-            <span>{`  R$${wine.priceNonMember.toFixed(2).replace('.', ',')}`}</span>
-          </p>
-        </div>
-      </Link>
-      <button 
+    <div className="winecard">
+      <StyledCard>
+        <Link href={`/loja/detalhes/${wine.id}`}>
+          <div>
+            <Image
+              src={wine.image}
+              alt={`${wine.name}-image`}
+              width={232.5}
+              height={350.5}
+            />
+            <p>{wine.name}</p>
+            <p>
+              <MiniPrice>{`R$${wine.price.toFixed(2).replace('.', ',')} `}</MiniPrice>
+              <DiscountSpan>{`  ${wine.discount}%OFF!`}</DiscountSpan>
+            </p>
+            <p>
+              <PartnerSpan>SÓCIO WINE</PartnerSpan>
+              <PriceSpan>
+                <span className="cifrão">R$</span>
+                <span className="price">
+                  {wine.priceMember.toFixed(2).replace('.', ',')}
+                </span>
+              </PriceSpan>
+            </p>
+            <p>
+              <PartnerSpan>NÃO SÓCIO</PartnerSpan>
+              <PartnerSpan>
+                {`  R$${wine.priceNonMember.toFixed(2).replace('.', ',')}`}
+              </PartnerSpan>
+            </p>
+          </div>
+        </Link>
+      </StyledCard>
+      <StyledButton 
         type='button'
         onClick={() => {
           if (!cart.some((e) => e.id === wine.id)) {
@@ -51,7 +113,7 @@ const WineCard = ({ wine }: { wine: WineObj }) => {
         }}
       >
           ADICIONAR
-      </button>
+      </StyledButton>
     </div>
   );
 };
