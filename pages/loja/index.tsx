@@ -5,6 +5,7 @@ import useSWR from 'swr';
 import WineCard from '../../components/WIneCard';
 import { WineObj } from '../../Interfaces/WineInterface';
 import { Pagination } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import FilterSideBar from '../../components/FIlterSidebar';
 import Header from '../../components/Header';
 import Context from '../../context/context';
@@ -20,8 +21,29 @@ const fetcher = async (url: string) => {
   return data;
 };
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#f79552',
+    },
+    secondary: {
+      main: '#c81a78',
+    },
+  },
+});
+
 const StyledHomeStore = styled.div`
   background-color: #f6f6f6;
+`;
+
+const StyledMain = styled.main`
+  display: flex;
+  flex-direction: column;
+
+  .pagination {
+    align-self: center;
+    text-color: #c81a78;
+  }
 `;
 
 const ProdutosEncontrados = styled.div`
@@ -65,45 +87,48 @@ const HomeStore: NextPage = () => {
   if (error) return <div>falhou ao carregar</div>;
   if (!data) return <div>carregando...</div>;
   return (
-    <StyledHomeStore>
-      <Head>
-        <title>WineApp</title>
-        <meta name="description" content="WineApp" />
-        <link rel="icon" href="/WineApp.ico" />
-      </Head>
+    <ThemeProvider theme={theme}>
+      <StyledHomeStore>
+        <Head>
+          <title>WineApp</title>
+          <meta name="description" content="WineApp" />
+          <link rel="icon" href="/WineApp.ico" />
+        </Head>
 
-      <Header />
+        <Header />
 
-      <aside id="sidebar">
-        <FilterSideBar setter={setFilter} />
-      </aside>
-      <main>
-        {data.totalItems === 0
-          ? (<p>Nenhum produto encontrado</p>)
-          : (
-            <ProdutosEncontrados>
-              <p className="number">{data.totalItems}</p>
-              <p>produtos encontrados</p>
-            </ProdutosEncontrados>
-          )}
-        <StyledCards>
-          {data.items.filter((e: WineObj) => 
-            e.name.toLocaleLowerCase().includes(nameFilter))
-            .map((e: WineObj) => (
-              <WineCard wine={e} key={e.id} />
-            ))}
-        </StyledCards>
+        <aside id="sidebar">
+          <FilterSideBar setter={setFilter} />
+        </aside>
+        <StyledMain>
+          {data.totalItems === 0
+            ? (<p>Nenhum produto encontrado</p>)
+            : (
+              <ProdutosEncontrados>
+                <p className="number">{data.totalItems}</p>
+                <p>produtos encontrados</p>
+              </ProdutosEncontrados>
+            )}
+          <StyledCards>
+            {data.items.filter((e: WineObj) => 
+              e.name.toLocaleLowerCase().includes(nameFilter))
+              .map((e: WineObj) => (
+                <WineCard wine={e} key={e.id} />
+              ))}
+          </StyledCards>
 
-        <Pagination
-          count={data.totalPages}
-          color='primary'
-          page={page}
-          onChange={(_e, p) => setPage(p)}
-          showFirstButton={true}
-          showLastButton={true}
-        />
-      </main>
-    </StyledHomeStore>
+          <Pagination
+            count={data.totalPages}
+            color='secondary'
+            page={page}
+            onChange={(_e, p) => setPage(p)}
+            shape='rounded'
+            className='pagination'
+            variant='outlined'
+          />
+        </StyledMain>
+      </StyledHomeStore>
+    </ThemeProvider>
   );
 };
 

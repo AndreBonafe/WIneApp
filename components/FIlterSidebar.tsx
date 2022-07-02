@@ -52,6 +52,8 @@ const StyledButton = styled.button`
   border: none;
   box-shadow: 2px 1px 5px 0px #DADADA;
   border-radius: 10%;
+  color: #f79552;
+  font-weight: bold;
 `;
 
 const FilterSideBar = 
