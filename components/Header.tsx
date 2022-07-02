@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { 
   AiOutlineSearch,
   AiOutlineUser,
@@ -13,7 +13,7 @@ import styled from 'styled-components';
 
 const StyledHeader = styled.div`
   @media (max-width: 414px) {
-    box-shadow: 0px 1px 1px 0px #C3C3C3;
+    box-shadow: 0px 2px 3px 0px #C3C3C3;
   }
   display: flex;
   justify-content: space-between;
@@ -24,7 +24,7 @@ const StyledHeader = styled.div`
   }
   @media (min-width: 415px) {
     justify-content: space-evenly;
-    box-shadow: 0px 1px 1px 0px #C3C3C3;
+    box-shadow: 0px 5px 5px 0px #C3C3C3;
     background-color: white;
 
     .wine-logo {
@@ -102,21 +102,28 @@ const StyledInput = styled.input`
 const Header = () => {
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  const [windowSize, setWindowSize] = useState(0);
   const { cart, setNameFilter } = useContext(Context);
 
   const onChangeFunc = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNameFilter(event.target.value);
   };
 
+  useEffect(() => {
+    setWindowSize(window.innerWidth);
+  }, []);
+
+  if (windowSize === 0) return <p>Carregando...</p>; 
+
   return (
     <StyledHeader>
-      {window.innerWidth <= 414 
+      {windowSize <= 414 
         && (
           <AiOutlineMenuUnfold
             onClick={() => setShowMenu(true)}
             size={50}
           />)}
-      {window.innerWidth <= 414 ? 
+      {windowSize <= 414 ? 
         showMenu && (
           <StyledHeaderLinks className="links">
             <AiOutlineMenuFold 
@@ -160,13 +167,16 @@ const Header = () => {
             </Link>
           </StyledHeaderLinks>
         )}
-      <Image 
-        src="/wine.svg"
-        alt="Wine-logo"
-        height={50}
-        width={50}
-        className="wine-logo"
-      />
+      <Link href="/">
+        <div className="wine-logo">
+          <Image 
+            src="/wine.svg"
+            alt="Wine-logo"
+            height={windowSize >= 415 ? 100 : 50}
+            width={windowSize >= 415 ? 100 : 50}
+          />
+        </div>
+      </Link>
       <HeaderImages className='header-images'>
         <AiOutlineSearch
           onClick={ () => setShowSearchBar(!showSearchBar) }

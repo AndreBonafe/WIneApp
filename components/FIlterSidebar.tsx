@@ -26,10 +26,10 @@ const StyledSection = styled.section`
     label {
       display: flex;
       font-size: 16px;
-      padding: 0 0 15px 25px;
+      padding: 0 25% 15px 25%;
     }
     h3 {
-      padding: 0 0 0 25px;
+      padding: 0 25% 0 25%;
     }
   }
 
