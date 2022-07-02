@@ -2,11 +2,11 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import useSWR from 'swr';
-import WineCard from '../components/WIneCard';
-import { WineCart, WineObj } from '../Interfaces/WineInterface';
+import WineCard from '../../components/WIneCard';
+import { WineCart, WineObj } from '../../Interfaces/WineInterface';
 import { Pagination } from '@mui/material';
-import FilterSideBar from '../components/FIlterSidebar';
-import Header from '../components/Header';
+import FilterSideBar from '../../components/FIlterSidebar';
+import Header from '../../components/Header';
 
 const fetcher = async (url: string) => {
   const res = await fetch(url);
