@@ -1,9 +1,9 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import useSWR from 'swr';
 import WineCard from '../components/WIneCard';
-import { WineObj } from '../Interfaces/WineInterface';
+import { WineCart, WineObj } from '../Interfaces/WineInterface';
 import { Pagination } from '@mui/material';
 import FilterSideBar from '../components/FIlterSidebar';
 import Header from '../components/Header';
@@ -21,6 +21,7 @@ const fetcher = async (url: string) => {
 const Home: NextPage = () => {
   const [page, setPage] = useState(1);
   const [filter, setFilter] = useState('0');
+  const [cart, setCart] = useState<WineCart[]>([]);
 
   const url = `https://wine-back-test.herokuapp.com/products?page=${page}&limit=10&filter=${filter}`;
   const { data, error } = useSWR(url, fetcher);
@@ -28,6 +29,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     const selectedFilter = localStorage.getItem('selectedFilter');
     if(selectedFilter) setFilter(selectedFilter);
+    setCart(JSON.parse(localStorage.getItem('cart') || '[]'));
   }, []);
   
   if (error) return <div>falhou ao carregar</div>;
@@ -40,7 +42,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/WineApp.ico" />
       </Head>
 
-      <Header />
+      <Header cart={cart}/>
 
       <aside id="sidebar">
         <FilterSideBar setter={setFilter} />
@@ -50,7 +52,7 @@ const Home: NextPage = () => {
           : `${data.totalItems} produtos encontrados`}</p>
 
         {data.items.map((e: WineObj) => (
-          <WineCard wine={e} key={e.id} />
+          <WineCard wine={e} key={e.id} cartSetter={setCart} cart={cart} />
         ))}
 
         <Pagination

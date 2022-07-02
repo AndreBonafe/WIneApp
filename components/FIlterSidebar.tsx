@@ -1,4 +1,4 @@
-import React, { Dispatch, useState } from 'react';
+import React, { Dispatch } from 'react';
 
 const FilterSideBar = 
 ({ setter }: { setter: Dispatch<React.SetStateAction<string>> }) => {

@@ -1,7 +1,17 @@
 import Image from 'next/image';
-import { WineObj } from '../Interfaces/WineInterface'; 
+import { WineCart, WineObj } from '../Interfaces/WineInterface'; 
+import React, { Dispatch } from 'react';
 
-const WineCard = ({ wine }: { wine: WineObj }) => {
+const WineCard = (
+  { wine, cartSetter, cart }: {
+    wine: WineObj, 
+    cartSetter: Dispatch<React.SetStateAction<WineCart[]>>,
+    cart: WineCart[]
+  },
+) => {
+
+  const localCart: WineCart[] | [] = JSON.parse(localStorage.getItem('cart') || '[]');
+
   return (
     <div>
       <Image
@@ -23,7 +33,23 @@ const WineCard = ({ wine }: { wine: WineObj }) => {
         <span>NÃO SÓCIO</span>
         <span>{`  R$${wine.priceNonMember}`}</span>
       </p>
-      <button type='button'>ADICIONAR</button>
+      <button 
+        type='button'
+        onClick={() => {
+          if (!cart.some((e) => e.id === wine.id)) {
+            const objCart: WineCart = { ...wine, quantity: 1 };
+            localStorage.setItem('cart', JSON.stringify([...cart, objCart]));
+            cartSetter([...cart, objCart ]);
+          } else {
+            const wineIndex = localCart.findIndex((e) => e.id === wine.id);
+            localCart[wineIndex].quantity += 1;
+            localStorage.setItem('cart', JSON.stringify(localCart));
+            cartSetter(localCart);
+          }
+        }}
+      >
+          ADICIONAR
+      </button>
     </div>
   );
 };

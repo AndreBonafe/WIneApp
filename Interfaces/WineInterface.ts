@@ -16,3 +16,7 @@ export interface WineObj {
   sommelierComment: string,
   type: string,
 }
+
+export interface WineCart extends WineObj {
+  quantity: number
+}

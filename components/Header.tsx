@@ -1,7 +1,8 @@
 import Image from 'next/image';
 import { AiOutlineSearch, AiOutlineUser, AiOutlineShoppingCart } from 'react-icons/ai';
+import { WineCart, WineObj } from '../Interfaces/WineInterface';
 
-const Header = () => {
+const Header = ({ cart } : { cart: WineCart[] }) => {
   return (
     <div>
       <Image 
@@ -18,6 +19,7 @@ const Header = () => {
       <AiOutlineSearch />
       <AiOutlineUser />
       <AiOutlineShoppingCart />
+      <span>{cart.reduce((acc, curr) => acc + curr.quantity, 0)}</span>
     </div>
   );
 };
