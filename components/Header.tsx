@@ -38,8 +38,10 @@ const Header = () => {
         <AiOutlineUser />
       </Link>
       <Link href='/carrinho'>
-        <AiOutlineShoppingCart />
-        <span>{cart.reduce((acc, curr) => acc + curr.quantity, 0)}</span>
+        <div>
+          <AiOutlineShoppingCart />
+          <span>{cart.reduce((acc, curr) => acc + curr.quantity, 0)}</span>
+        </div>
       </Link>
     </div>
   );
