@@ -3,7 +3,12 @@ import useSWR from 'swr';
 import Header from '../../../components/Header';
 import { WineObj } from '../../../Interfaces/WineInterface';
 import Context from '../../../context/context';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
+import Head from 'next/head';
+import Image from 'next/image';
+import ReactStars from 'react-stars';
+import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai';
+import Link from 'next/link';
 
 const fetcher = async (url: string) => {
   const res = await fetch(url);
@@ -19,7 +24,12 @@ const Detail = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  const { cart } = useContext(Context);
+  const { cart, setCart } = useContext(Context);
+  
+
+  useEffect(() => {
+    setCart(JSON.parse(localStorage.getItem('cart') || '[]'));
+  }, [setCart]);
 
   const url = 'https://wine-back-test.herokuapp.com/products';
   const { data, error } = useSWR(url, fetcher);
@@ -29,10 +39,68 @@ const Detail = () => {
 
   const wine: WineObj = data.items.find((e: WineObj) => e.id === Number(id));
 
+  console.log(wine);
+
+  const cartItem = cart.find((e) => e.id === Number(id));
+
   return (
     <div>
+      <Head>
+        <title>WineApp</title>
+        <meta name="description" content="WineApp" />
+        <link rel="icon" href="/WineApp.ico" />
+      </Head>
+
       <Header cart={cart}/>
-      {wine.name}
+
+      <Link href='/loja'>
+        <p>{'< VOLTAR'}</p>
+      </Link>
+
+      <Image
+        src={wine.image}
+        alt={`${wine.name}-image`}
+        width={232.5}
+        height={350.5}
+      />
+      <span>{`Vinhos > ${wine.country} > ${wine.region}`}</span>
+      <h2>{wine.name}</h2>
+      <section>
+        <Image 
+          unoptimized
+          loader={() => wine.flag}
+          src={wine.flag}
+          alt={`${wine.country} flag`}
+          height={30}
+          width={30}
+        />
+        <span>{wine.country}</span>
+        <span>{wine.type}</span>
+        <span>{wine.classification}</span>
+        <span>{wine.size}</span>
+        <ReactStars 
+          count={5}
+          size={25}
+          value={wine.rating}
+          edit={false}
+        />
+        <span>{`(${wine.avaliations})`}</span>
+      </section>
+      <section>
+        <h4>R$</h4>
+        <h2>{wine.priceMember.toFixed(2).replace('.', ',')}</h2>
+        <h4>NÃO SÓCIO R${wine.priceMember.toFixed(2).replace('.', ',')}/UN.</h4>
+      </section>
+      <section>
+        <h4>Comentário do Sommelier</h4>
+        <p>{wine.sommelierComment}</p>
+      </section>
+      <div>
+        <AiOutlineMinusCircle />
+        <p>{cartItem ? cartItem.quantity : 0}</p>
+        <AiOutlinePlusCircle />
+        <p>ADICIONAR</p>
+      </div>
     </div>
   );
 };
