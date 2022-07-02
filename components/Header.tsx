@@ -12,36 +12,66 @@ import Context from '../context/context';
 import styled from 'styled-components';
 
 const StyledHeader = styled.div`
+  @media (max-width: 414px) {
+    box-shadow: 0px 1px 1px 0px #C3C3C3;
+  }
   display: flex;
   justify-content: space-between;
   background-color: white;
-  box-shadow: 0px 1px 1px 0px #C3C3C3;
 
   .btnFold {
     align-self: start;
   }
+  @media (min-width: 415px) {
+    justify-content: space-evenly;
+    box-shadow: 0px 1px 1px 0px #C3C3C3;
+    background-color: white;
+
+    .wine-logo {
+      order: 0;
+    }
+  
+    .links {
+      order: 1;
+    }
+
+    .header-images {
+      order: 2;
+    }
+  }
 `;
 
 const StyledHeaderLinks = styled.div`
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  background-color: white;
-  height: 100%;
-  width: 60%;
-  z-index: 10;
-  box-shadow: 1px 0px 5px 1px #C3C3C3;
-
-  .linkp {
-    padding: 15%;
-    font-size: 1.5em;
+  @media (max-width: 414px) {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    background-color: white;
+    height: 100%;
+    width: 60%;
+    z-index: 10;
+    box-shadow: 1px 0px 5px 1px #C3C3C3;
+  
+    .linkp {
+      padding: 15%;
+      font-size: 1.5em;
+    }
+  
+    h5 {
+      font-size: 1.5em;
+      position: absolute;
+      margin-left: 40%;
+      margin-top: 10px;
+    }
   }
 
-  h5 {
-    font-size: 1.5em;
-    position: absolute;
-    margin-left: 40%;
-    margin-top: 10px;
+  @media (min-width: 415px) {
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 60%;
   }
 `;
 
@@ -54,8 +84,8 @@ const HeaderImages = styled.div`
 
 const StyledInput = styled.input`
   width: 100%;
-  align-self: center;
   margin-right: 5px;
+  align-self: center;
 `;
 
 const Header = () => {
@@ -77,7 +107,7 @@ const Header = () => {
           />)}
       {window.innerWidth <= 414 ? 
         showMenu && (
-          <StyledHeaderLinks>
+          <StyledHeaderLinks className="links">
             <AiOutlineMenuFold 
               onClick={() => setShowMenu(false)}
               className="btnFold"
@@ -101,12 +131,22 @@ const Header = () => {
             </Link>
           </StyledHeaderLinks>
         ) : (
-          <StyledHeaderLinks>
-            <Link href='/clube'>Clube</Link>
-            <Link href='/loja'>Loja</Link>
-            <Link href='/produtores'>Produtores</Link>
-            <Link href='/ofertas'>Ofertas</Link>
-            <Link href='/eventos'>Eventos</Link>
+          <StyledHeaderLinks className="links">
+            <Link className="menulink" href='/clube'>
+              <span className="linkp">Clube</span>
+            </Link>
+            <Link className="menulink" href='/loja'>
+              <span className="linkp">Loja</span>
+            </Link>
+            <Link className="menulink" href='/produtores'>
+              <span className="linkp">Produtores</span>
+            </Link>
+            <Link className="menulink" href='/ofertas'>
+              <span className="linkp">Ofertas</span>
+            </Link>
+            <Link className="menulink" href='/eventos'>
+              <span className="linkp">Eventos</span>
+            </Link>
           </StyledHeaderLinks>
         )}
       <Image 
@@ -114,8 +154,9 @@ const Header = () => {
         alt="Wine-logo"
         height={50}
         width={50}
+        className="wine-logo"
       />
-      <HeaderImages>
+      <HeaderImages className='header-images'>
         <AiOutlineSearch
           onClick={ () => setShowSearchBar(!showSearchBar) }
           size={35}
