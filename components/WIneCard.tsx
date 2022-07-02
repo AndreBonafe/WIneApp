@@ -13,7 +13,7 @@ const StyledCard = styled.div`
   justify-content: center;
 `;
 
-const StyledButton = styled.button`
+export const StyledButton = styled.button`
   width: 100%;
   color: white;
   height: 30px;
@@ -23,14 +23,14 @@ const StyledButton = styled.button`
   border-radius: 2px;
 `;
 
-const DiscountSpan = styled.span`
+export const DiscountSpan = styled.span`
   color: white;
   background-color: #f79552;
   padding: 2px;
   border-radius: 2px;
 `;
 
-const MiniPrice = styled.span`
+export const MiniPrice = styled.span`
   color: gray;
   padding: 2px;
   border-radius: 2px;
@@ -38,14 +38,14 @@ const MiniPrice = styled.span`
   text-decoration: line-through;
 `;
 
-const PartnerSpan = styled.span`
+export const PartnerSpan = styled.span`
   color: gray;
   padding: 2px;
   border-radius: 2px;
   font-size: 11px;
 `;
 
-const PriceSpan = styled.span`
+export const PriceSpan = styled.span`
   color: #c81a78;
 
   .cifrão {
