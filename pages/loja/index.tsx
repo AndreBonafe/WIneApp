@@ -3,11 +3,13 @@ import Head from 'next/head';
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
 import useSWR from 'swr';
 import WineCard from '../../components/WIneCard';
-import { WineCart, WineObj } from '../../Interfaces/WineInterface';
+import { WineObj } from '../../Interfaces/WineInterface';
 import { Pagination } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import FilterSideBar from '../../components/FIlterSidebar';
 import Header from '../../components/Header';
 import Context from '../../context/context';
+import styled from 'styled-components';
 
 const fetcher = async (url: string) => {
   const res = await fetch(url);
@@ -18,6 +20,68 @@ const fetcher = async (url: string) => {
   }
   return data;
 };
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#f79552',
+    },
+    secondary: {
+      main: '#c81a78',
+    },
+  },
+});
+
+const StyledHomeStore = styled.div`
+  padding-top: 15px;
+  background-color: #f6f6f6;
+  @media (min-width: 415px) {
+    display: flex;
+
+    .sidebar {
+      width: 80%;
+    }
+  }
+`;
+
+const StyledMain = styled.main`
+  display: flex;
+  flex-direction: column;
+
+  .pagination {
+    align-self: center;
+    text-color: #c81a78;
+  }
+`;
+
+const ProdutosEncontrados = styled.div`
+  display: flex;
+  color: gray;
+  .number {
+    margin-right: 5px;
+    font-weight: bold;
+    color: black;
+  }
+  justify-content: center;
+  padding: 3px;
+`;
+
+const StyledCards = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 10px;
+
+  .winecard {
+    width: 40%;
+  }
+  @media(min-width: 415px) {
+    .winecard {
+      width: 20%;
+      margin: 5px;
+    }
+  }
+`;
 
 const HomeStore: NextPage = () => {
   const [page, setPage] = useState(1);
@@ -37,7 +101,7 @@ const HomeStore: NextPage = () => {
   if (error) return <div>falhou ao carregar</div>;
   if (!data) return <div>carregando...</div>;
   return (
-    <div>
+    <ThemeProvider theme={theme}>
       <Head>
         <title>WineApp</title>
         <meta name="description" content="WineApp" />
@@ -45,30 +109,40 @@ const HomeStore: NextPage = () => {
       </Head>
 
       <Header />
+      <StyledHomeStore>
+        <aside className="sidebar">
+          <FilterSideBar setter={setFilter} />
+        </aside>
+        <StyledMain>
+          {data.totalItems === 0
+            ? (<p>Nenhum produto encontrado</p>)
+            : (
+              <ProdutosEncontrados>
+                <p className="number">{data.totalItems}</p>
+                <p>produtos encontrados</p>
+              </ProdutosEncontrados>
+            )}
+          <StyledCards>
+            {data.items.filter((e: WineObj) => 
+              e.name.toLocaleLowerCase().includes(nameFilter))
+              .map((e: WineObj) => (
+                <WineCard wine={e} key={e.id} />
+              ))}
+          </StyledCards>
 
-      <aside id="sidebar">
-        <FilterSideBar setter={setFilter} />
-      </aside>
-      <main>
-        <p>{data.totalItems === 0 ? 'Nenhum produto encontrado' 
-          : `${data.totalItems} produtos encontrados`}</p>
-
-        {data.items.filter((e: WineObj) => 
-          e.name.toLocaleLowerCase().includes(nameFilter))
-          .map((e: WineObj) => (
-            <WineCard wine={e} key={e.id} />
-          ))}
-
-        <Pagination
-          count={data.totalPages}
-          color='primary'
-          page={page}
-          onChange={(_e, p) => setPage(p)}
-          showFirstButton={true}
-          showLastButton={true}
-        />
-      </main>
-    </div>
+          {data.totalItems !== 0 && (
+            <Pagination
+              count={data.totalPages}
+              color='secondary'
+              page={page}
+              onChange={(_e, p) => setPage(p)}
+              shape='rounded'
+              className='pagination'
+              variant='outlined'
+            />)}
+        </StyledMain>
+      </StyledHomeStore>
+    </ThemeProvider>
   );
 };
 
