@@ -226,7 +226,7 @@ const Detail: NextPage = () => {
   return (
     <>
       <Head>
-        <title>WineApp</title>
+        <title>{wine.name}p</title>
         <meta name="description" content="WineApp" />
         <link rel="icon" href="/WineApp.ico" />
       </Head>
@@ -325,9 +325,17 @@ const Detail: NextPage = () => {
           {window.innerWidth >= 414
           && (
             <AddAndRemove>
-              <AiOutlineMinusCircle onClick={ () => onClickMinus() } className='btn'/>
-              <p>{cartItem ? cartItem.quantity : 0}</p>
-              <AiOutlinePlusCircle onClick={ () => onClickPlus() } className='btn'/>
+              <AiOutlineMinusCircle 
+                data-cy="detail-minus-btn"
+                onClick={ () => onClickMinus() }
+                className='btn'
+              />
+              <p data-cy="detail-qnty">{cartItem ? cartItem.quantity : 0}</p>
+              <AiOutlinePlusCircle
+                data-cy="detail-plus-btn"
+                onClick={ () => onClickPlus() }
+                className='btn'
+              />
               <Link href='/loja'>
                 <p>ADICIONAR</p>
               </Link>

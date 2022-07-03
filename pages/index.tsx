@@ -2,6 +2,7 @@ import { NextPage } from 'next';
 import Image from 'next/image';
 import Header from '../components/Header';
 import styled from 'styled-components';
+import Head from 'next/head';
 
 const StyledHome = styled.div`
   display: flex;
@@ -13,6 +14,12 @@ const StyledHome = styled.div`
 const Home: NextPage = () => {
   return (
     <>
+      <Head>
+        <title>WineApp</title>
+        <meta name="description" content="WineApp" />
+        <link rel="icon" href="/WineApp.ico" />
+      </Head>
+
       <Header />
       <StyledHome>
         <h1>Bem-Vindo(a) ao Wine APP!</h1>

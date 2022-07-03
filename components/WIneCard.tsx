@@ -76,7 +76,10 @@ const WineCard = ({ wine }: { wine: WineObj }) => {
   const localCart: WineCart[] | [] = JSON.parse(localStorage.getItem('cart') || '[]');
 
   return (
-    <div className="winecard">
+    <div 
+      className="winecard"
+      data-cy={`card-${wine.id}`}
+    >
       <StyledCard>
         <Link href={`/loja/detalhes/${wine.id}`}>
           <div>
@@ -111,6 +114,7 @@ const WineCard = ({ wine }: { wine: WineObj }) => {
       </StyledCard>
       <StyledButton 
         type='button'
+        data-cy={`add-btn-${wine.id}`}
         onClick={() => {
           if (!cart.some((e) => e.id === wine.id)) {
             const objCart: WineCart = { ...wine, quantity: 1 };
