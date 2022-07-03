@@ -29,6 +29,11 @@ export const StyledButton = styled.button`
 
   @media(min-width: 415px) {
     margin-top: 15px;
+
+    :hover {
+      cursor: pointer;
+      background-color: #8CD14B;
+    }
   }
 `;
 
@@ -80,7 +85,7 @@ const WineCard = ({ wine }: { wine: WineObj }) => {
       className="winecard"
       data-cy={`card-${wine.id}`}
     >
-      <StyledCard>
+      <StyledCard className="winecard-white">
         <Link href={`/loja/detalhes/${wine.id}`}>
           <div>
             <Image
@@ -113,6 +118,7 @@ const WineCard = ({ wine }: { wine: WineObj }) => {
         </Link>
       </StyledCard>
       <StyledButton 
+        className='add-btn'
         type='button'
         data-cy={`add-btn-${wine.id}`}
         onClick={() => {

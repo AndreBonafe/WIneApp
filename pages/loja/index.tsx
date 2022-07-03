@@ -37,9 +37,8 @@ const StyledHomeStore = styled.div`
   background-color: #f6f6f6;
   @media (min-width: 415px) {
     display: flex;
-
     .sidebar {
-      width: 80%;
+      width: 360px;
     }
   }
 `;
@@ -80,6 +79,12 @@ const StyledCards = styled.div`
       width: 20%;
       margin: 5px;
     }
+
+    .winecard-white:hover {
+      cursor: pointer;
+      width: 110%;
+      box-shadow: -3px 12px 16px 3px rgba(200,26,120,0.18);
+    }
   }
 `;
 
@@ -108,7 +113,7 @@ const HomeStore: NextPage = () => {
         <link rel="icon" href="/WineApp.ico" />
       </Head>
 
-      <Header />
+      <Header page="loja"/>
       <StyledHomeStore>
         <aside className="sidebar">
           <FilterSideBar setter={setFilter} />

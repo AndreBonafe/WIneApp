@@ -11,7 +11,7 @@ const ProfileHome: NextPage = () => {
         <meta name="description" content="WineApp" />
         <link rel="icon" href="/WineApp.ico" />
       </Head>
-      <Header />
+      <Header page="perfil"/>
       <CommingSoon />
     </div>
   );

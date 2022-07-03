@@ -27,6 +27,10 @@ const StyledSection = styled.section`
       display: flex;
       font-size: 16px;
       padding: 0 10% 15px 10%;
+
+      :hover{
+        cursor: pointer;
+      }
     }
     h3 {
       padding: 0 10% 0 10%;
@@ -67,13 +71,19 @@ const StyledButton = styled.button`
   font-size: 16px;
   margin-top: 5px;
   border: none;
-  box-shadow: 2px 1px 5px 0px #DADADA;
-  border-radius: 10%;
-  color: #f79552;
+  box-shadow: 2px 1px 5px 0px #f79552;
+  border-radius: 10px;
+  color: #c81a78;
   font-weight: bold;
   @media (min-width: 415px) {
-    width: 100%;
+    width: 250px;
     align-self: flex-start;
+
+    :hover {
+      cursor: pointer;
+      color: #f79552;
+      box-shadow: 2px 1px 5px 0px #c81a78;
+    }
   }
 `;
 
