@@ -12,8 +12,9 @@ import Context from '../context/context';
 import styled from 'styled-components';
 
 const StyledHeader = styled.div`
+  margin-bottom: 8px;
   @media (max-width: 414px) {
-    box-shadow: 0px 2px 3px 0px #C3C3C3;
+    box-shadow: 1px 2px 7px 3px #8C8C8C;
   }
   display: flex;
   justify-content: space-between;
@@ -24,7 +25,7 @@ const StyledHeader = styled.div`
   }
   @media (min-width: 415px) {
     justify-content: space-evenly;
-    box-shadow: 0px 5px 5px 0px #C3C3C3;
+    box-shadow: 1px 2px 7px 3px #8C8C8C;
     background-color: white;
 
     .wine-logo {
@@ -37,6 +38,14 @@ const StyledHeader = styled.div`
 
     .header-images {
       order: 2;
+    }
+
+    .header-images:hover {
+      cursor: pointer;
+    }
+
+    .wine-logo-img:hover {
+      cursor: pointer;
     }
   }
 `;
@@ -63,6 +72,12 @@ const StyledHeaderLinks = styled.div`
       margin-left: 40%;
       margin-top: 10px;
     }
+
+    .selected {
+      font-size: 200%;
+      font-weight: bold;
+      color: #c81a78;
+    }
   }
 
   @media (min-width: 415px) {
@@ -72,6 +87,19 @@ const StyledHeaderLinks = styled.div`
     justify-content: space-evenly;
     align-items: center;
     width: 60%;
+
+    .selected {
+      font-size: 180%;
+      font-weight: bold;
+      color: #c81a78;
+    }
+
+    .linkp:hover {
+      font-size: 180%;
+      font-weight: bold;
+      color: #c81a78;
+      cursor: pointer;
+    }
   }
 `;
 
@@ -99,7 +127,7 @@ const StyledInput = styled.input`
   }
 `;
 
-const Header = () => {
+const Header = ({ page } : { page: string }) => {
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [windowSize, setWindowSize] = useState(0);
@@ -133,37 +161,77 @@ const Header = () => {
             />
             <h5>MENU</h5>
             <Link className="menulink" href='/clube'>
-              <span className="linkp">Clube</span>
+              <span 
+                className={page === 'clube' ? 'linkp selected' : 'linkp'}
+              >
+                Clube
+              </span>
             </Link>
             <Link className="menulink" href='/loja'>
-              <span className="linkp">Loja</span>
+              <span 
+                className={page === 'loja' ? 'linkp selected' : 'linkp'}
+              >
+                Loja
+              </span>
             </Link>
             <Link className="menulink" href='/produtores'>
-              <span className="linkp">Produtores</span>
+              <span 
+                className={page === 'produtores' ? 'linkp selected' : 'linkp'}
+              >
+                Produtores
+              </span>
             </Link>
             <Link className="menulink" href='/ofertas'>
-              <span className="linkp">Ofertas</span>
+              <span 
+                className={page === 'ofertas' ? 'linkp selected' : 'linkp'}
+              >
+                Ofertas
+              </span>
             </Link>
             <Link className="menulink" href='/eventos'>
-              <span className="linkp">Eventos</span>
+              <span 
+                className={page === 'eventos' ? 'linkp selected' : 'linkp'}
+              >
+                Eventos
+              </span>
             </Link>
           </StyledHeaderLinks>
         ) : (
           <StyledHeaderLinks className="links">
             <Link className="menulink" href='/clube'>
-              <span className="linkp">Clube</span>
+              <span 
+                className={page === 'clube' ? 'linkp selected' : 'linkp'}
+              >
+                Clube
+              </span>
             </Link>
             <Link className="menulink" href='/loja'>
-              <span className="linkp">Loja</span>
+              <span 
+                className={page === 'loja' ? 'linkp selected' : 'linkp'}
+              >
+                Loja
+              </span>
             </Link>
             <Link className="menulink" href='/produtores'>
-              <span className="linkp">Produtores</span>
+              <span 
+                className={page === 'produtores' ? 'linkp selected' : 'linkp'}
+              >
+                Produtores
+              </span>
             </Link>
             <Link className="menulink" href='/ofertas'>
-              <span className="linkp">Ofertas</span>
+              <span 
+                className={page === 'ofertas' ? 'linkp selected' : 'linkp'}
+              >
+                Ofertas
+              </span>
             </Link>
             <Link className="menulink" href='/eventos'>
-              <span className="linkp">Eventos</span>
+              <span 
+                className={page === 'eventos' ? 'linkp selected' : 'linkp'}
+              >
+                Eventos
+              </span>
             </Link>
           </StyledHeaderLinks>
         )}
@@ -174,6 +242,7 @@ const Header = () => {
             alt="Wine-logo"
             height={windowSize >= 415 ? 100 : 50}
             width={windowSize >= 415 ? 100 : 50}
+            className="wine-logo-img"
           />
         </div>
       </Link>

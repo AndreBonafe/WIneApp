@@ -138,6 +138,7 @@ const StyledWineDetsSection = styled.section`
 const AddAndRemove = styled.div`
   display: flex;
   align-items: center;
+  align-self: center;
   background-color: #7ebc43;
   padding: 15px 35px 15px 15px;
   border-radius: 18px;
@@ -147,8 +148,25 @@ const AddAndRemove = styled.div`
   .btn {
     margin: 0 5px 0 5px;
     width: 50px;
+
+    :hover {
+      height: 2em;
+    }
   }
-  width: 55%;
+  width: 75%;
+
+  :hover {
+    cursor: pointer;
+  }
+
+  p {
+    margin-left: 25px;
+
+    :hover {
+      font-size: 120%;
+      font-weight: bold;
+    }
+  }
 `;
 
 const MiniPrice = styled.span`
@@ -231,7 +249,7 @@ const Detail: NextPage = () => {
         <link rel="icon" href="/WineApp.ico" />
       </Head>
 
-      <Header />
+      <Header page="loja"/>
 
       <StyledDetail>
         {window.innerWidth >= 414 
@@ -330,7 +348,7 @@ const Detail: NextPage = () => {
                 onClick={ () => onClickMinus() }
                 className='btn'
               />
-              <p data-cy="detail-qnty">{cartItem ? cartItem.quantity : 0}</p>
+              <span data-cy="detail-qnty">{cartItem ? cartItem.quantity : 0}</span>
               <AiOutlinePlusCircle
                 data-cy="detail-plus-btn"
                 onClick={ () => onClickPlus() }

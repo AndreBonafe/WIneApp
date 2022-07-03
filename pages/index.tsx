@@ -20,7 +20,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/WineApp.ico" />
       </Head>
 
-      <Header />
+      <Header page="home"/>
       <StyledHome>
         <h1>Bem-Vindo(a) ao Wine APP!</h1>
         <Image

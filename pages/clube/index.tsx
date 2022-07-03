@@ -11,7 +11,7 @@ const ClubHome: NextPage = () => {
         <meta name="description" content="WineApp" />
         <link rel="icon" href="/WineApp.ico" />
       </Head>
-      <Header />
+      <Header page="clube"/>
       <CommingSoon />
     </div>
   );
