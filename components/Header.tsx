@@ -181,9 +181,14 @@ const Header = () => {
         <AiOutlineSearch
           onClick={ () => setShowSearchBar(!showSearchBar) }
           size={35}
+          data-cy="search-icon"
         />
         {showSearchBar && (
-          <StyledInput type="text" onChange={onChangeFunc} />
+          <StyledInput
+            type="text"
+            onChange={onChangeFunc}
+            data-cy="search-input"
+          />
         )}
         {!showSearchBar && (
           <HeaderImages>
@@ -195,7 +200,9 @@ const Header = () => {
             <Link href='/carrinho'>
               <div>
                 <AiOutlineShoppingCart size={35}/>
-                <span>{cart.reduce((acc, curr) => acc + curr.quantity, 0)}</span>
+                <span data-cy="cart-total-itens">
+                  {cart.reduce((acc, curr) => acc + curr.quantity, 0)}
+                </span>
               </div>
             </Link>
           </HeaderImages>

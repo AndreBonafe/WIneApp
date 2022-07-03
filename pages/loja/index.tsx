@@ -103,7 +103,7 @@ const HomeStore: NextPage = () => {
   return (
     <ThemeProvider theme={theme}>
       <Head>
-        <title>WineApp</title>
+        <title>WineApp - Loja</title>
         <meta name="description" content="WineApp" />
         <link rel="icon" href="/WineApp.ico" />
       </Head>
@@ -118,7 +118,12 @@ const HomeStore: NextPage = () => {
             ? (<p>Nenhum produto encontrado</p>)
             : (
               <ProdutosEncontrados>
-                <p className="number">{data.totalItems}</p>
+                <p className="number">{
+                  nameFilter !== '' 
+                    ? data.items.filter((e: WineObj) => 
+                      e.name.toLocaleLowerCase().includes(nameFilter)).length 
+                    : data.totalItems
+                }</p>
                 <p>produtos encontrados</p>
               </ProdutosEncontrados>
             )}

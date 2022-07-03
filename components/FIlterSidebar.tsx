@@ -102,40 +102,47 @@ const FilterSideBar =
             <label htmlFor="40"> 
               <input type="radio" value="0-40" name="filteropt" 
                 onChange={(event) => onClickFunc(event)}
-                defaultChecked={selectedFilter === '0-40'} />
+                defaultChecked={selectedFilter === '0-40'}
+                id="40"  />
             Até R$40 </label>
 
             <label htmlFor="60"> 
               <input type="radio" value="40-60" name="filteropt" 
                 onChange={(event) => onClickFunc(event)}
-                defaultChecked={selectedFilter === '40-60'} />
+                defaultChecked={selectedFilter === '40-60'}
+                id="60"  />
             R$40 A R$60 </label>
 
             <label htmlFor="100"> 
               <input type="radio" value="60-100" name="filteropt" 
                 onChange={(event) => onClickFunc(event)}
-                defaultChecked={selectedFilter === '60-100'} />
+                defaultChecked={selectedFilter === '60-100'}
+                id="100"  />
             R$60 A R$100 </label>
 
             <label htmlFor="200"> 
               <input type="radio" value="100-200" name="filteropt" 
                 onChange={(event) => onClickFunc(event)}
-                defaultChecked={selectedFilter === '100-200'} />
+                defaultChecked={selectedFilter === '100-200'}
+                id="200"  />
             R$100 A R$200 </label>
 
             <label htmlFor="500"> 
               <input type="radio" value="200-500" name="filteropt" 
                 onChange={(event) => onClickFunc(event)}
-                defaultChecked={selectedFilter === '200-500'} />
+                defaultChecked={selectedFilter === '200-500'}
+                id="500"  />
             R$200 A R$500 </label>
 
             <label htmlFor="501"> 
               <input type="radio" value="500-1000" name="filteropt" 
                 onChange={(event) => onClickFunc(event)}
-                defaultChecked={selectedFilter === '500-1000'} />
+                defaultChecked={selectedFilter === '500-1000'}
+                id="501"  />
             Acima de R$500 </label>
 
-            <StyledButton type="button" value="" name="filteropt" 
+            <StyledButton type="button" value="" name="filteropt"
+              data-cy="remove-filters-btn"
               onClick={(event: React.FormEvent<HTMLButtonElement>) => {
                 setter('');
                 localStorage.setItem('selectedFilter', '');
@@ -152,39 +159,46 @@ const FilterSideBar =
             <label htmlFor="40"> 
               <input type="radio" value="0-40" name="filteropt" 
                 onChange={(event) => onClickFunc(event)}
-                defaultChecked={selectedFilter === '0-40'} />
+                defaultChecked={selectedFilter === '0-40'}
+                id="40"  />
             Até R$40 </label>
 
             <label htmlFor="60"> 
               <input type="radio" value="40-60" name="filteropt" 
                 onChange={(event) => onClickFunc(event)}
-                defaultChecked={selectedFilter === '40-60'} />
+                defaultChecked={selectedFilter === '40-60'}
+                id="60"  />
             R$40 A R$60 </label>
 
             <label htmlFor="100">
               <input type="radio" value="60-100" name="filteropt" 
                 onChange={(event) => onClickFunc(event)}
-                defaultChecked={selectedFilter === '60-100'} />
+                defaultChecked={selectedFilter === '60-100'}
+                id="100"  />
             R$60 A R$100 </label>
             
             <label htmlFor="200"> 
               <input type="radio" value="100-200" name="filteropt" 
                 onChange={(event) => onClickFunc(event)}
-                defaultChecked={selectedFilter === '100-200'} />
+                defaultChecked={selectedFilter === '100-200'}
+                id="200"  />
             R$100 A R$200 </label>
 
             <label htmlFor="500"> 
               <input type="radio" value="200-500" name="filteropt" 
                 onChange={(event) => onClickFunc(event)}
-                defaultChecked={selectedFilter === '200-500'} />
+                defaultChecked={selectedFilter === '200-500'}
+                id="500"  />
             R$200 A R$500  </label>
             <label htmlFor="501"> 
               <input type="radio" value="500-1000" name="filteropt" 
                 onChange={(event) => onClickFunc(event)}
-                defaultChecked={selectedFilter === '500-1000'} />
+                defaultChecked={selectedFilter === '500-1000'}
+                id="501"  />
             Acima de R$500 </label>
 
             <StyledButton type="button" value="" name="filteropt" 
+              data-cy="remove-filters-btn"
               onClick={(event: React.FormEvent<HTMLButtonElement>) => {
                 setter('');
                 localStorage.setItem('selectedFilter', '');
