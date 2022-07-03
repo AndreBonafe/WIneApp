@@ -39,7 +39,8 @@ Ou você pode Buildar e usar a versão buildada do NextJs:
 npm run build && npm start
 ```
 
-Ou tambem checar pelo deploy abaixo
+Ou tambem checar pelo deploy abaixo:
+https://wine-app-andre-bonafe.vercel.app/
 
 
 ---
@@ -106,6 +107,7 @@ npm run build && npm start
 ```
 
 Or you can check the deploy bellow:
+https://wine-app-andre-bonafe.vercel.app/
 
 
 ---
